@@ -9,8 +9,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Login',
+      component: Login
     }
   ]
 })
