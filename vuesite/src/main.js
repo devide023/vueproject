@@ -30,14 +30,6 @@ axios.interceptors.request.use((config) => {
   config.headers['timestamp'] = new Date().getTime()
   config.headers['nonce'] = Mtils.security.random(6)
   config.headers['signature'] = Mtils.security.hex_md5('123456')
-  /*let token = localStorage.getItem('access_token')
-  let tokeninfo = Qs.parse(token)
-  if (token) {
-    config.headers['staffid'] = parseInt(tokeninfo.StaffId)
-    config.headers['timestamp'] = new Date().getTime()
-    config.headers['nonce'] = Mtils.security.random(6)
-    config.headers['signature'] = Mtils.security.hex_md5('123456')
-  }*/
   if (config.method === 'post') {
     config.data = {
       ...config.data

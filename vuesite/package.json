@@ -1,8 +1,8 @@
 {
-  "name": "y",
+  "name": "vueproject",
   "version": "1.0.0",
-  "description": "y",
-  "author": "y",
+  "description": "vueproject",
+  "author": "devide",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -58,7 +58,10 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "axios": "^0.18.0",
+    "element-ui": "^2.4.5",
+    "mtils": "^2.0.3"
   },
   "engines": {
     "node": ">= 6.0.0",
