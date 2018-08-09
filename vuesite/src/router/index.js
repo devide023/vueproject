@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../components/Login/Login.Vue'
+import systemlogin from '../components/Login/systemlogin.vue';
 Vue.use(Router)
 
 const router = new Router({
@@ -9,7 +9,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: systemlogin
     }
   ]
 })
