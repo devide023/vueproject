@@ -1,6 +1,6 @@
-# y
+# vuesite
 
-> y
+> vuesite
 
 ## Build Setup
 
