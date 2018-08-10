@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import systemlogin from '@/components/Login/systemlogin';
 import mainlayout from '@/components/main/layout'
+import userlist from '@/components/user/userlist'
+import rolelist from '@/components/role/rolelist'
+import menulist from '@/components/menu/menulist';
 Vue.use(Router)
 
 const router = new Router({
@@ -10,7 +13,10 @@ const router = new Router({
     {
       path: '/',
       name: 'Login',
-      component: systemlogin
+      component: systemlogin,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/main',
@@ -20,18 +26,38 @@ const router = new Router({
         {
           path:'usermgr',
           name:'usermgr',
-          component:() => import('@/components/user/userlist'),
-          meta:{
-            requireAuth:true
-          }
+          children:[{
+            path:'index',
+            name:'userindex',
+            component:userlist,
+            meta:{
+              requireAuth:true
+            }
+          }]
         },
         {
           path:'rolemgr',
           name:'rolemgr',
-          component:()=>import('@/components/role/rolelist'),
-          meta:{
-            requireAuth:true
-          }
+          children:[{
+            path:'index',
+            name:'roleindex',
+            component:rolelist,
+            meta:{
+              requireAuth:true
+            }
+          }]
+        },
+        {
+          path:'menumgr',
+          name:'menumgr',
+          children:[{
+            path:'index',
+            name:'menuindex',
+            component:menulist,
+            meta:{
+              requireAuth:true
+            }
+          }]
         }
       ]
     }

@@ -42,6 +42,7 @@ import Qs from 'qs';
                         console.log('返回数据');
                         console.log(res.data);
                         let userid = res.data.list[0].Id;
+                        localStorage.setItem('userid',userid)
                         this.$axios.get('service/GetToken?staffId='+userid).then(result=>{
                             console.log(result.data.Data)
                             localStorage.setItem('access_token', Qs.stringify(result.data.Data))
