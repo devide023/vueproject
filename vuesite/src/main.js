@@ -5,10 +5,10 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import axios from 'axios';
-import Mtils from 'mtils';
+import axios from 'axios'
+import Mtils from 'mtils'
+import Qs from 'qs';
 Vue.use(ElementUI)
-Vue.config.productionTip = false
 let loadingstatus
 let axiosinstance = axios.create({
   baseURL: 'http://127.0.0.1:9000/api/',
@@ -55,7 +55,7 @@ axios.interceptors.response.use((res) => {
 })
 Vue.prototype.$axios = axiosinstance
 /* eslint-disable no-new */
-new Vue({
+const app = new Vue({
   el: '#app',
   router,
   components: { App },

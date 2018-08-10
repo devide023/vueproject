@@ -5,7 +5,7 @@
                 <img src='@/assets/logo.png'>
             </el-col>
         </el-row>
-        
+
         <el-row class="myrow">
             <el-col :lg="1" :md="2" :sm="6">用户名</el-col>
             <el-col :lg="23" :md="22" :sm="18"><el-input v-model="username" placeholder="" type="text"></el-input>
@@ -20,13 +20,13 @@
             <el-col><el-button type="primary" @click="login">登录</el-button>
             </el-col>
         </el-row>
-        
-        
+
+
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import Qs from 'qs';
     export default {
         data() {
             return {
@@ -36,11 +36,24 @@ import axios from 'axios'
         },
         methods: {
             login() {
-                this.$axios.post('login/checklogin',{login_name:this.username,pwd:this.userpwd}).then((res)=>{
-                    console.log(res.data);
-                    this.$router.push({ path: '/main' }) 
-                },(res)=>{
-                    console.log(res.data);
+                this.$axios.post('login/checklogin',{login_name:this.username,pwd:this.userpwd}).then(res=>{
+                    if(res.data.state==1)
+                    {
+                        console.log('返回数据');
+                        console.log(res.data);
+                        let userid = res.data.list[0].Id;
+                        this.$axios.get('service/GetToken?staffId='+userid).then(result=>{
+                            console.log(result.data.Data)
+                            localStorage.setItem('access_token', Qs.stringify(result.data.Data))
+                            this.$router.push({ path: '/main' })
+                        })
+                    }
+                    else
+                    {
+                        alert(res.data.msg);
+                    }
+                },res=>{
+                    console.log(res);
                 });
             }
         }
