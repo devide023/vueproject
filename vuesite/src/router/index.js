@@ -13,10 +13,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Login',
-      component: systemlogin,
-      meta:{
-        requireAuth:true
-      }
+      component: systemlogin
     },
     {
       path:'/main',
@@ -25,15 +22,8 @@ const router = new Router({
       children:[
         {
           path:'usermgr',
-          name:'usermgr',
-          children:[{
-            path:'index',
-            name:'userindex',
-            component:userlist,
-            meta:{
-              requireAuth:true
-            }
-          }]
+          name:'userindex',
+          component:userlist
         },
         {
           path:'rolemgr',
