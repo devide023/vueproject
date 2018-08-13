@@ -18,7 +18,7 @@
           :label="col.label"
           :width="col.width">
         </el-table-column>
-        <el-table-column label="操作" width="150">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -43,6 +43,41 @@
       >
     </el-pagination>
 
+    <el-dialog
+      title="编辑"
+      :visible.sync="dialogVisible"
+      width="30%"
+      @close="onclosedialog"
+      @open="onopendialog"
+      >
+      <el-form :model="form" ref="form" label-width="80px">
+        <el-form-item label="姓名">
+          <el-input v-model="form.Name" type="text"></el-input>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-select v-model="form.Sex" placeholder="性别">
+            <el-option label="男" value="M"></el-option>
+            <el-option label="女" value="W"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="form.Tel" type="text"></el-input>
+        </el-form-item>
+        <el-form-item label="手机">
+          <el-input v-model="form.Mobile" type="text"></el-input>
+        </el-form-item>
+        <el-form-item label="地址">
+          <el-input v-model="form.Address" type="text"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer">
+        <el-button type="primary" @click="onEdituser">提交</el-button>
+        <el-button @click="dialogVisible=false">取消</el-button>
+      </span>
+    </el-dialog>
+
+
     </div>
 </template>
 
@@ -57,10 +92,20 @@
               tel:'',
               sex:''
             },
+            form:{
+              Name:'',
+              Id:0,
+              Sex:'M',
+              Tel:'',
+              Mobile:'',
+              Address:'',
+              Login_Name:''
+            },
             userlist:[],
             pageindex:1,
             pagesize:20,
             resultcount:0,
+            dialogVisible: false,
             columns:[
               {
               id:0,
@@ -90,19 +135,19 @@
               id:4,
               name:'Tel',
               label:'电话',
-              width:150
+              width:100
               },
               {
               id:5,
               name:'Mobile',
               label:'手机',
-              width:150
+              width:100
               },
               {
               id:6,
               name:'Address',
               label:'地址',
-              width:500
+              width:400
               },
               {
               id:7,
@@ -114,7 +159,7 @@
               id:8,
               name:'Add_Time',
               label:'录入日期',
-              width:200
+              width:150
               },
             ]
           }
@@ -134,6 +179,16 @@
           onquery(){
             this.getuserlist();
           },
+          onEdituser(){
+
+          },
+          onclosedialog(done){
+
+          },
+          onopendialog(){
+            console.log('opendialog');
+
+          },
           handleSizeChange(val) {
             this.pagesize = val;
             this.pageindex = 1;
@@ -145,6 +200,14 @@
           },
           handleEdit(index, row) {
             console.log(index, row);
+            this.dialogVisible=true;
+            this.form.Id = row.Id;
+            this.form.Login_Name = row.Login_Name;
+            this.form.Name = row.Name;
+            this.form.Sex = row.Sex;
+            this.form.Tel = row.Tel;
+            this.form.Mobile = row.Mobile;
+            this.form.Address  =row.Address;
           },
           handleDelete(index, row) {
             this.$confirm('你确定删除该用户?','提示',{
