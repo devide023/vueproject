@@ -21,33 +21,22 @@ const router = new Router({
       component:mainlayout,
       children:[
         {
-          path:'usermgr',
+          path:'usermgr/index',
           name:'userindex',
           component:userlist
         },
         {
-          path:'rolemgr',
-          name:'rolemgr',
-          children:[{
-            path:'index',
-            name:'roleindex',
-            component:rolelist,
-            meta:{
-              requireAuth:true
-            }
-          }]
+          path:'rolemgr/index',
+          name:'rolemgrindex',
+          component:rolelist
         },
         {
-          path:'menumgr',
-          name:'menumgr',
-          children:[{
-            path:'index',
-            name:'menuindex',
-            component:menulist,
-            meta:{
-              requireAuth:true
-            }
-          }]
+          path:'menumgr/index',
+          name:'menumgrindex',
+          component:menulist,
+          meta:{
+            requireAuth:true
+          }
         }
       ]
     }

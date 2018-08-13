@@ -18,8 +18,6 @@ let axiosinstance = axios.create({
   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 })
 axios.interceptors.request.use((config) => {
-  console.log('请求开始')
-  console.log(config)
   loadingstatus = ElementUI.Loading.service({
     fullscreen: true,
     lock: true,
@@ -39,7 +37,6 @@ axios.interceptors.request.use((config) => {
       ...config.params
     }
   }
-  console.log('请求结束')
   return config
 }, (error) => {
   loadingstatus.close()
