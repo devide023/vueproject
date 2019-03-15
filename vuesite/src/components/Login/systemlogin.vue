@@ -36,18 +36,19 @@ import Qs from 'qs';
         },
         methods: {
             login() {
-                this.$axios.post('login/checklogin',{login_name:this.username,pwd:this.userpwd}).then(res=>{
+                var _this = this;
+                _this.$axios.post('login/checklogin',{login_name:this.username,pwd:this.userpwd}).then(res=>{
                     if(res.data.state==1)
                     {
                         console.log('返回数据');
                         console.log(res.data);
-                        let userid = res.data.list[0].Id;
-                        localStorage.setItem('userid',userid)
-                        this.$axios.get('service/GetToken?staffId='+userid).then(result=>{
-                            console.log(result.data.Data)
-                            localStorage.setItem('access_token', Qs.stringify(result.data.Data))
-                            this.$router.push({ path: '/main' })
-                        })
+                        var ticket = res.data.ticket;
+                        localStorage.clear();
+                        localStorage.setItem("ticket",ticket);
+                        localStorage.setItem("userid",res.data.list[0].Id);
+                        _this.$axios.get('user/get_userlist').then(r=>{
+                             _this.$router.push({path:'/main'});
+                        },r=>{});                     
                     }
                     else
                     {
@@ -56,6 +57,8 @@ import Qs from 'qs';
                 },res=>{
                     console.log(res);
                 });
+                
+                
             }
         }
     }

@@ -11,43 +11,21 @@ import Qs from 'qs';
 Vue.use(ElementUI)
 let loadingstatus
 let axiosinstance = axios.create({
-  baseURL: 'http://127.0.0.1:9000/api/',
+  baseURL: 'http://192.168.0.207:9000/',
   transformRequest: [function (data) {
-    return Qs.stringify(data)
+    return Qs.stringify(data);
   }],
-  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+  headers: {
+    'Content-Type':'application/x-www-form-urlencoded'
+  }
 })
-axios.interceptors.request.use((config) => {
-  loadingstatus = ElementUI.Loading.service({
-    fullscreen: true,
-    lock: true,
-    text: '数据加载中',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)'})
-  config.headers['staffid'] = 0
-  config.headers['timestamp'] = new Date().getTime()
-  config.headers['nonce'] = Mtils.security.random(6)
-  config.headers['signature'] = Mtils.security.hex_md5('123456')
-  if (config.method === 'post') {
-    config.data = {
-      ...config.data
-    }
-  } else if (config.method === 'get') {
-    config.params = {
-      ...config.params
-    }
+var ticket = localStorage.getItem("ticket");
+axiosinstance.interceptors.request.use(config => {
+  if (ticket) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers.Authorization = ticket;
   }
   return config
-}, (error) => {
-  loadingstatus.close()
-  return Promise.reject(error)
-})
-// 返回状态判断
-axios.interceptors.response.use((res) => {
-  loadingstatus.close()
-  return res
-}, (error) => {
-  loadingstatus.close()
+}, error => {
   return Promise.reject(error)
 })
 Vue.prototype.$axios = axiosinstance
